@@ -1,4 +1,4 @@
-# Seminar 1
+# Seminar 1 2.10.2025
 SQL scripts for table creation and data insertion. A brief report explaining:(aici si pt update)  
   
 DEADLINE - al treilea seminar (intarziere = 2p)  
