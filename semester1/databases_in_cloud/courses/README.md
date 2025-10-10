@@ -20,6 +20,12 @@ DML -> the OPERATIONS
 Data warehousing:   
 -OLTP Online Transaction Process: DB in at least 3NF (removes all the operations that could appear at delete/insert)    
 -OLAP Online Application Processing: star schema or snowflake schema    
+   
+OLAP star schema:   
+![star schema img](../images/olap_star_schema.png)  
+    
+OLAP scnowflake schema:     
+![snowflake schema img](../images/olap_snowflake_schema.png)
     
 Take from OLTP -> modify so we are able to store on OLAP -> OLAP    
     
