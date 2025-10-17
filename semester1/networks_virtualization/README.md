@@ -10,7 +10,7 @@ Half attendances to the course (7 attendances) => 1p bonus on the final grade
 
 ## Course 2 10.10.2025
 
-### ------------------Digital communication principles------------------
+### ------------------Architecture of Digital communication principles------------------
 OSI     
 ...............     
 application                 |       
@@ -39,4 +39,15 @@ network
 ...............     
 physical (datalink + physical from OSI)     
 ...............     
+    
+    
+a -> 10     
+b -> 101    
+These 2 are not prezix-free because 10 is prexif for 101   
 
+Huffman -> In order to achieve prefix-free encoding       
+
+Discrete envoder - > to get a list of symbols   
+COmpression alg. takes each chunk of x bits and assign a code   
+## Course 3 17.10.2025
+course ended at pg 25   
