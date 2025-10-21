@@ -119,5 +119,45 @@ SImilar to partitioning but the data is distributed across multiple nodes (Tabel
 Pentru RDB nu prea functioneaza dar MySQL are un tool ce permite si PostgreSQL a preluat ideea.     
 Pe AWS avem DSQL (Distributed SQL)     
 ## Course4 21.10.2025
-Question - for seminar1 homework, one table with both realtime rows and history rows or we need to have separate tables for realworld and history rows? If yes, how do we know when to move a row from realworld to history (based on transaction\_time or on valid\_time?) ?   
- 
+---------------------RBMS VS NoSQL---------------------     
+Workload OLTP vs OLAP   
+### OLTP    
+* tranzactii scurte si multe
+* known access patterns (known queries), don;t let the user to ake the queries
+* probleme de rezolvat pt queries care merg greu: 
+    * re-write the query
+    * indexes
+    * use hints 
+
+### OLAP    
+* ad-hoc queries (the customer says how he want the query to be)
+Scale up - vertical scaling (single instance)   
+Scale out - horizontal scaling (more instances - cluster)   
+
+### GFS Architecture    
+* the app only asks the MAster for the chuks, then communicates directly with the chunk servers
+
+### Big Table
+* instead of PK => row key (a value which uniquely identifies the row)
+### Availability
+99.99% available => 0.01 won't be available the service => 0.01 * 356 => 3 days and some won't be available 
+### NoSQL
+BASE model - Basically available soft state and eventually consistency  
+* ooptimistic - based on versions - we receive a version
+### Acid
+* pessimistic concurrency - we can have deadlocks -> resolve using logs
+
+## relational
+* relational schema
+* OLAP (Analytical)
+## nosql - eliminates the joins
+* column family
+* graph - for complex problems which are based on graphs theories
+    * both nodes and edges can have attributes
+* document databases
+    * in memory caching
+    * BSON (the parsing is faster -> no need for text to number cocnversion) is faster than JSON (must be parsed from text string)
+* key-value stores - most scalable, permits quick operations
+    * we don't have SQL
+    * fast lookups (based on the key)
+
