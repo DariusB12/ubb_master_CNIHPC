@@ -1,0 +1,11 @@
+# Create DB (or use an existing database)
+sudo -u postgres createdb bitemporal_db
+
+# Apply schema (may require superuser for uuid-ossp extension)
+sudo -u postgres psql -d bitemporal_db -f bitemporal_schema.sql
+
+# Populate sample data
+sudo -u postgres psql -d bitemporal_db -f populate.sql
+
+# Create views / functions
+sudo -u postgres psql -d bitemporal_db -f create_views.sql
