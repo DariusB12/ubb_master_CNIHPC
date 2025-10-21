@@ -117,4 +117,7 @@ One big table partition into more tables, se cauta cheia care filtreaza cel mia 
 ## Sharding
 SImilar to partitioning but the data is distributed across multiple nodes (Tabela o vedem una dar datele din ea sunt imprastiate pe noduri)     
 Pentru RDB nu prea functioneaza dar MySQL are un tool ce permite si PostgreSQL a preluat ideea.     
-Pe AWS avem DSQL (Distributed SQL)      
+Pe AWS avem DSQL (Distributed SQL)     
+## Course4 21.10.2025
+Question - for seminar1 homework, one table with both realtime rows and history rows or we need to have separate tables for realworld and history rows? If yes, how do we know when to move a row from realworld to history (based on transaction\_time or on valid\_time?) ?   
+ 
