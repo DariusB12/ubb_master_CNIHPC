@@ -37,7 +37,6 @@ erDiagram
         int warehouse_id FK "NOT NULL"
         int quantity "NOT NULL"
         text movement_type "NOT NULL"
-        text reference
         timestamp valid_start "NOT NULL"
         timestamp valid_end "NOT NULL"
         timestamp transaction_start "NOT NULL"

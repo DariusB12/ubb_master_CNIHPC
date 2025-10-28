@@ -37,13 +37,24 @@ DECLARE i INT;
     BEGIN
         FOR i IN 1..50 LOOP
             INSERT INTO product_price (product_id, supplier_id, price, currency, valid_start, valid_end)
-            VALUES (i, ((i % 5) + 1), round( (10 + (i % 20))::numeric + random() * 5, 2), 'EUR', '2024-01-01'::timestamp, '2024-12-31'::timestamp);
+            VALUES (i, ((i % 5) + 1), round( CAST((10 + (i % 20) + random() * 5) AS numeric), 2), 'EUR', '2024-01-01'::timestamp, '2024-12-31'::timestamp);
 
-            -- Reflect realistic changes over time => For some products, create a new price starting 2025-01-01
+            -- Reflect realistic changes over time => For some products, create a new price valid from 2025-01-01
             -- NEW INSERT (the old price remains, new price is a new row with new valid time)
             IF (i % 7) = 0 THEN
                 INSERT INTO product_price (product_id, supplier_id, price, currency, valid_start, valid_end)
-                VALUES (i, ((i % 5) + 1), round( (12 + (i % 15))::numeric + random() * 3, 2), 'EUR', '2025-01-01'::timestamp, '2026-12-31'::timestamp);
+                VALUES (i, ((i % 5) + 1), round( CAST((12 + (i % 15) + random() * 3) AS numeric), 2), 'EUR', '2025-01-01'::timestamp, '2026-12-31'::timestamp);
+            END IF;
+            -- Some products have price corrections during 2024 => UPDATE (creates a new version with new transaction time)
+            IF (i % 10) = 0 THEN
+                UPDATE product_price SET price = 100
+                WHERE pp_id IN (SELECT pp_id FROM product_price WHERE product_id = i AND valid_start = '2024-01-01'::timestamp LIMIT 1);
+            END IF;
+            -- Some PRICES will be deleted => those which were valid from 2024-01-01 
+            --and of course in order to delete the latest transaction we delete the row with transaction_end = 'infinity'  (multiple of 15)
+            IF (i % 15) = 0 THEN
+                DELETE FROM product_price
+                WHERE pp_id IN (SELECT pp_id FROM product_price WHERE product_id = i AND valid_start = '2024-01-01'::timestamp AND transaction_end = 'infinity' LIMIT 1);
             END IF;
         END LOOP;
 END $$;
@@ -65,7 +76,7 @@ DECLARE gs INT;
         -- Create 10 shipments for Fall 2024
         FOR gs IN 41..50 LOOP
             INSERT INTO inventory_movement (product_id, warehouse_id, quantity, movement_type, valid_start, valid_end)
-            VALUES ((gs % 50) + 1, ((gs % 6) + 1), -((gs % 10) + 1), 'shipment', '2024-10-05'::timestamp, '2024-10-05'::timestamp);
+            VALUES ((gs % 50) + 1, ((gs % 6) + 1), -((gs % 10) + 1), 'shipment', '2024-10-05'::timestamp, '2024-10-06'::timestamp);
         END LOOP;
 
 
@@ -89,5 +100,8 @@ DECLARE gs INT;
         -- Reflect realistic changes over time
         -- Further corrections causing versions
         UPDATE inventory_movement SET movement_type = 'adjustment' WHERE im_id IN (SELECT im_id FROM inventory_movement OFFSET 2 LIMIT 1);
-
+        
+        -- DELETE receipt movements for some products
+        DELETE FROM inventory_movement
+        WHERE im_id IN (SELECT im_id FROM inventory_movement WHERE movement_type = 'receipt' AND transaction_end = 'infinity' LIMIT 3);
 END$$;

@@ -1,3 +1,8 @@
+-- psql -U your_username -h your_host -p your_port
+-- \c your_database_name;
+-- \i ./no_temporal_extensions/bitemporal_schema.sql
+-- DROP DATABASE no_temporal_extensions;
+-- CREATE DATABASE no_temporal_extensions;
 -- for globally unique primary keys
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -79,30 +84,50 @@ CREATE TRIGGER pp_before_insert BEFORE INSERT ON product_price FOR EACH ROW EXEC
 CREATE OR REPLACE FUNCTION trg_pp_versioning()
 RETURNS trigger AS $$
 BEGIN
-    -- close existing row -> set transaction_end to now()
-    UPDATE product_price SET transaction_end = now()
-    WHERE pp_id = OLD.pp_id AND transaction_end = 'infinity'::timestamp;
+    IF NEW.transaction_end = 'infinity'::timestamp OR NEW.transaction_end IS NULL THEN
 
-    -- insert the new version
-    INSERT INTO product_price (product_id, supplier_id, price, currency, valid_start, valid_end, transaction_start, transaction_end)
-    VALUES (NEW.product_id, NEW.supplier_id, NEW.price, NEW.currency, NEW.valid_start, NEW.valid_end);
+        -- close existing row -> set transaction_end to now()
+        UPDATE product_price
+        SET transaction_end = now()
+        WHERE pp_id = OLD.pp_id AND transaction_end = 'infinity'::timestamp;
 
-    RETURN NULL; -- prevent default UPDATE
-END; $$ LANGUAGE plpgsql;
+        -- insert the new version only if the new data doesn;t contain transaction_end time  (for delete we don't need a new version)
+        INSERT INTO product_price (
+            product_id, supplier_id, price, currency,
+            valid_start, valid_end, transaction_start, transaction_end
+        )
+        VALUES (
+            NEW.product_id, NEW.supplier_id, NEW.price, NEW.currency,
+            NEW.valid_start, NEW.valid_end, now(), 'infinity'::timestamp
+        );
+    
+        RETURN NULL;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 -- RETURN NEW → PostgreSQL will make the normal UPDATE (replace the old row with the new row)
 -- RETURN NULL → PostgreSQL won't make the normal update, we handle it ourselves letting the old value remain and inserting a new row instead
 
 CREATE TRIGGER pp_versioning BEFORE UPDATE ON product_price FOR EACH ROW EXECUTE FUNCTION trg_pp_versioning();
 
-------------------- TRIGGER FOR DELETE -------------------
+-- ------------------- TRIGGER FOR DELETE -------------------
 CREATE OR REPLACE FUNCTION trg_pp_delete()
 RETURNS trigger AS $$
 BEGIN
-    UPDATE product_price SET transaction_end = now() WHERE pp_id = OLD.pp_id AND transaction_end = 'infinity'::timestamp;
+    UPDATE product_price SET transaction_end = now()
+    WHERE pp_id = OLD.pp_id AND transaction_end = 'infinity'::timestamp;
     RETURN NULL;
 END; $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER pp_logical_delete BEFORE DELETE ON product_price FOR EACH ROW EXECUTE FUNCTION trg_pp_delete();
+
+
+
+
+
+
 
 
 -- INVENTORY_MOVEMENT triggers for trnasaction time management
@@ -118,20 +143,27 @@ END; $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER im_before_insert BEFORE INSERT ON inventory_movement FOR EACH ROW EXECUTE FUNCTION trg_im_before_insert();
 
+
 ------------------- TRIGGER FOR UPDATE -------------------
 CREATE OR REPLACE FUNCTION trg_im_versioning()
 RETURNS trigger AS $$
 BEGIN
-    UPDATE inventory_movement SET transaction_end = now()
-    WHERE im_id = OLD.im_id AND transaction_end = 'infinity'::timestamp;
+    IF NEW.transaction_end = 'infinity'::timestamp OR NEW.transaction_end IS NULL THEN
 
-    INSERT INTO inventory_movement (product_id, warehouse_id, quantity, movement_type, reference, valid_start, valid_end, transaction_start, transaction_end)
-    VALUES (NEW.product_id, NEW.warehouse_id, NEW.quantity, NEW.movement_type, NEW.reference, NEW.valid_start, NEW.valid_end);
+        UPDATE inventory_movement SET transaction_end = now()
+        WHERE im_id = OLD.im_id AND transaction_end = 'infinity'::timestamp;
 
-    RETURN NULL;
+        INSERT INTO inventory_movement (product_id, warehouse_id, quantity, movement_type, valid_start, valid_end, transaction_start, transaction_end)
+        VALUES (NEW.product_id, NEW.warehouse_id, NEW.quantity, NEW.movement_type, NEW.valid_start, NEW.valid_end, now(), 'infinity'::timestamp);
+
+        RETURN NULL;
+    END IF;
+
+    RETURN NEW;
 END; $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER im_versioning BEFORE UPDATE ON inventory_movement FOR EACH ROW EXECUTE FUNCTION trg_im_versioning();
+
 
 ------------------- TRIGGER FOR DELETE -------------------
 CREATE OR REPLACE FUNCTION trg_im_delete()
