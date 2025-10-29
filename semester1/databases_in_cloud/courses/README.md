@@ -142,7 +142,7 @@ Scale out - horizontal scaling (more instances - cluster)
 ### Availability
 99.99% available => 0.01 won't be available the service => 0.01 * 356 => 3 days and some won't be available 
 ### NoSQL
-BASE model - Basically available soft state and eventually consistency  
+BASE model - Basically available soft state and eventually consistency (at some point all the nodes will contain all the information)  
 * ooptimistic - based on versions - we receive a version
 ### Acid
 * pessimistic concurrency - we can have deadlocks -> resolve using logs
@@ -161,3 +161,26 @@ BASE model - Basically available soft state and eventually consistency
     * we don't have SQL
     * fast lookups (based on the key)
 
+
+## Course5 28.10.2025
+### Key value stores - the simplest model
+* not for complex op. to change the value (is more for fast accessability)
+* horizontal scaling
+* value: simple data (string etc.) or a composite value, using JSON (easy to serialize/deserialize between diff languages)
+#### Data opacity
+* the BD doesn't care or know what's inside them, CANNOT QUERY INSIDE THE VALUE 
+* it just stores the value
+#### Performance
+* GET(key) in O(1) complexity
+* easy horizontal scaling - adding more nodes
+#### Internal implementation
+* memory only -> hash tables O(1) avreage access (we can load them in memory) = in-memory KV stores e.g Redis
+* persistent stores:  B-tree (allways insert at the leaf level on the first available leaf from left to right)
+As long as the hashmap can be in memory, we have O(1) access, if its too  big and must be on disk => lower performance  
+
+### AWS DynamoDB 
+* serverless -> it has a server but managed by AWS, we only connect to db and create tables, we do not need to concern about configuring the server
+* non-key attributes => what the value containes
+#### Types of indexes:
+* LSI - is on the current chard and uses the same partition key as the base table STRONG CONSISTENCY
+* GSI - we have another index divided on all the shards, each attribute used in the index, will have a separate copy on the disk EVENTUAL CONSISTENCY
