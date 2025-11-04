@@ -184,3 +184,10 @@ As long as the hashmap can be in memory, we have O(1) access, if its too  big an
 #### Types of indexes:
 * LSI - is on the current chard and uses the same partition key as the base table STRONG CONSISTENCY
 * GSI - we have another index divided on all the shards, each attribute used in the index, will have a separate copy on the disk EVENTUAL CONSISTENCY
+
+## Course6 04.11.2025
+### Document DB
+BSON extends JSON (e.g data type date is suported in BSON but not in JSON)  
+MongoDB is using BSON (BSO is the storing model)    
+The primary key \_id is automatically indexed (for fast lookups) and immutable (cannot  change it)  
+
