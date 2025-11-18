@@ -191,3 +191,24 @@ BSON extends JSON (e.g data type date is suported in BSON but not in JSON)
 MongoDB is using BSON (BSO is the storing model)    
 The primary key \_id is automatically indexed (for fast lookups) and immutable (cannot  change it)  
 
+## Course8 18.11.2025
+### AWS certified worker presentation - ArtSoft - software architect
+### CDC Tool
+### ETL vs ELT (the order differs)
+* Extract
+* Transform 
+* Load
+    * full load (periodically take all the data from production DB and put it in the data warehouse)
+    * incremental (delta) load (keeps a timestamp based on which the next load knows when to start to load the data - advantage: don't have to take all the data once)
+    * batch ETL (similar with incremental but takes batches of data)
+    * Real-Time/Streaming (in the source db is happening a change the change is also propagated in the warehouse)
+### types of CDC (Change Data Capture)
+* log 
+* trigger
+* timestamp
+
+### Log based CDC
+
+
+
+
