@@ -202,6 +202,10 @@ The primary key \_id is automatically indexed (for fast lookups) and immutable (
     * incremental (delta) load (keeps a timestamp based on which the next load knows when to start to load the data - advantage: don't have to take all the data once)
     * batch ETL (similar with incremental but takes batches of data)
     * Real-Time/Streaming (in the source db is happening a change the change is also propagated in the warehouse)
+    
+In this process of ETL/ELT the company may also want the data to be encrypted at rest and while transfering it!.    
+ETL - when we can do transform on a powerfull machine (we need processing power)    
+ELT - when the intermediate machine are not enough power for processing so we process the data asta loading them into the destination   
 ### types of CDC (Change Data Capture)
 * log 
 * trigger
