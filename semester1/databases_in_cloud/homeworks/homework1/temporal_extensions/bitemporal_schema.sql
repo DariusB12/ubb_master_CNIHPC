@@ -8,7 +8,7 @@
 -- SELECT * FROM product_price_history_v;
 -- SELECT * FROM temporal_conflicts;
 -- SELECT * FROM movements_valid_during('2025-08-01'::timestamp,'2025-09-05'::timestamp);
--- SSELECT * FROM records_known_at('2025-11-05'::timestamptz);
+-- SELECT * FROM records_known_at('2025-11-05'::timestamptz);
 
 
 -- for globally unique primary keys

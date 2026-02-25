@@ -52,7 +52,8 @@ DECLARE i INT;
                 VALUES (i, ((i % 5) + 1), round( CAST((12 + (i % 15) + random() * 3) AS numeric), 2), 'EUR', '2025-01-01'::timestamp, '2026-12-31'::timestamp);
             END IF;
         END LOOP;
-END $$;
+    END
+ $$;
 -- TRANSACTION 3 TO CREATE VERSIONS VIA ANOTHER UPDATES
 DO $$
 DECLARE i INT;
