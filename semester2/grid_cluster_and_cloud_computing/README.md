@@ -1,4 +1,4 @@
----------------Course1------------  25.02.2026  
+# ---------------Course1------------  25.02.2026  
 FINAL GRADE:    
 * Presentation 50%  (or written exam if presentation not wanted) 
 presentation = demo + teoretical presentation
