@@ -6,7 +6,7 @@ the problem will be implemented by us and presented at the seminar(tested) when 
 
 No mandatory presence for seminars/courses  
 
-![WhatsApp\ Image\ 2026-02-26\ at\ 18.52.34.jpeg](WhatsApp\ Image\ 2026-02-26\ at\ 18.52.34.jpeg)
+![WhatsApp\ Image\ 2026-02-26\ at\ 18.52.34.jpeg](WhatsApp\ Image\ 2026-02-26\ at\ 18.52.34.jpeg)   
 
 
 # ------------------Course1----------------26.02.2026  
@@ -48,4 +48,33 @@ There will be no implementation for FairLossLink because is the very base level 
 
 
 ## StubbornLinks - algorithm = retransmit forever
-![image_stubborn_links](Screenshot\ from\ 2026-02-26\ 18-58-37.png)
+![image_stubborn_links](Screenshot\ from\ 2026-02-26\ 18-58-37.png)     
+Algorithm explanation:  
+We set the timer delta times, and delta times is sent the message infinetely (timeout)  
+![2_stubbornlink.png](2_stubbornlink.png)   
+
+## Perfect Links - are supposed to be a certain TCP
+It will eventually be delivered but only once
+### Abstraction
+![perfecr_link_abstraction.png](perfecr_link_abstraction.png)   
+    
+### Implementation
+We store it into the `deliver` set to assure we dont send it twice    
+![perfect_implementation.png](perfect_implementation.png)       
+
+
+## Failure Detection
+E.g if it doesnt answer in five second after giving it a ping .... but we are using maths now   
+
+### Abstraction
+![abstraction_failure_detection.png](abstraction_failure_detection.png)     
+
+### IMplementation
+for every p (EVERY NODE)    
+alive - a set   
+deliver - a set     
+    
+If a node doesnt answer within delta then is dead   
+Delta is like a god given constant - is math -      
+![failure_implementation.png](failure_implementation.png)       
+
