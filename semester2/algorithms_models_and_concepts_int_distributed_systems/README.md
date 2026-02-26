@@ -6,7 +6,7 @@ the problem will be implemented by us and presented at the seminar(tested) when 
 
 No mandatory presence for seminars/courses  
 
-![WhatsApp\ Image\ 2026-02-26\ at\ 18.52.34.jpeg](WhatsApp\ Image\ 2026-02-26\ at\ 18.52.34.jpeg)   
+![broadcast_requirements.jpeg](broadcast_requirements.jpeg)   
 
 
 # ------------------Course1----------------26.02.2026  
@@ -43,12 +43,12 @@ CORRECT PROCESS = the process doesnt crash, doesnt behave malliciously
 There will be no implementation for FairLossLink because is the very base level (wires)     
 
 ## FairLossLink 
-![image_screenshot_courses_notes](Screenshot\ from\ 2026-02-26\ 18-51-33.png)   
+![fairloss_image.png](fairloss_image.png)   
 
 
 
 ## StubbornLinks - algorithm = retransmit forever
-![image_stubborn_links](Screenshot\ from\ 2026-02-26\ 18-58-37.png)     
+![subborn_interface.png](subborn_interface.png)     
 Algorithm explanation:  
 We set the timer delta times, and delta times is sent the message infinetely (timeout)  
 ![2_stubbornlink.png](2_stubbornlink.png)   
