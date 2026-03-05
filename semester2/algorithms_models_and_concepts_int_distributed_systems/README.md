@@ -135,7 +135,7 @@ For a correct source all the correc porcesses will get it
 perfect links -if you send a mesasge is received the other side
 
 ### lazy reliable broadcast algorithm
-![](course2_imgs/ laz_reliable_broadcast_algorithm.png)   
+![](course2_imgs/laz_reliable_broadcast_algorithm.png)   
     
 from[p] := [0]^N (^N means the no of nodes that we have)    
 
