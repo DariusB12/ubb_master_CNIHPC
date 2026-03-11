@@ -15,4 +15,8 @@ INVITED SPEAKERS:
     
 Course website: [https://www.cs.ubbcluj.ro/~dadi/cloud/](https://www.cs.ubbcluj.ro/~dadi/cloud/)    
 
+# ---------------Course3------------  11.03.2026  
+Deadlock vs LiveLock    
+Deadlock - threads are still waiting for each other     
+Livelock - threads are doing something, but just cannot advance     
 
