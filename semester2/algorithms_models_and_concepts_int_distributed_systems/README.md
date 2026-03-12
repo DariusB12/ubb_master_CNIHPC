@@ -137,5 +137,45 @@ perfect links -if you send a mesasge is received the other side
 ### lazy reliable broadcast algorithm
 ![](course2_imgs/laz_reliable_broadcast_algorithm.png)   
     
-from[p] := [0]^N (^N means the no of nodes that we have)    
+from[p] := [0]^N (^N means the no of nodes that we have)        
+if no node crashes => best case scenario    
+
+# ------------------Course3----------------12.03.2026  
+
+
+## Eager Reliable Broadcast implementation
+![](course3_imgs/eacger_reliable_broadcast_algorithm.png)
+In this case a step (about which is talking in the description of the implementation in the manual support of the course) is another broadcast!!!   
+
+## Uniform REliable Broadcast interface
+![](course3_imgs/uniform_reliable_broadcast_interface.png)
+
+![](course3_imgs/1.png)
+
+
+![](course3_imgs/2.png)
+#(ack[m]) means the no of elements      
+#(ack[m]) > N\2 means Less than half a nodes can fail     
+    
+    
+![](course3_imgs/3.png)
+If a node fails (on image b) ) then the whole nodes in the it's subtree fails => solution, a node will send message to a random no of nodes and so on, and it can go infinetly => solution, when R round is 0 we no longes send messaged        
+
+![](course3_imgs/4.png)
+
+
+![](course3_imgs/5.png) 
+implementation of the algorithm - k and R are constants predefined fanout and round     
+    
+![](course3_imgs/6.png)
+
+![](course3_imgs/7.png)
+![](course3_imgs/8.png)
+![](course3_imgs/9.png)
+![](course3_imgs/10.png)
+![](course3_imgs/11.png)
+![](course3_imgs/12.png)
+![](course3_imgs/13.png)
+
+
 
