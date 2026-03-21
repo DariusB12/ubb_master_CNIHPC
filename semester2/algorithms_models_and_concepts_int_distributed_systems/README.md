@@ -178,4 +178,15 @@ implementation of the algorithm - k and R are constants predefined fanout and ro
 ![](course3_imgs/13.png)
 
 
+# ------------------Course4----------------19.03.2026
+![](course4_imgs/1.png)
+![](course4_imgs/2.png)
+![](course4_imgs/3.png)
+![](course4_imgs/4.png)
+![](course4_imgs/5.png)
+![](course4_imgs/6.png)
+![](course4_imgs/7.png)
+![](course4_imgs/8.png)
+![](course4_imgs/9.png)
+![](course4_imgs/10.png)
 
