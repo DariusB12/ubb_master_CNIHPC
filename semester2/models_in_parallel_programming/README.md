@@ -7,4 +7,14 @@ ONLY THE FINAL GRADE SHOULD BE > 4.5
     
 You can replace written exam with an app oriented exam      
     
-NO mandatory presence at courses seminars or labs, but for labs is mandatory to present them    
+NO mandatory presence at courses seminars or labs, but for labs is mandatory to present them   
+    
+## COMMAND TO START THE VPN        
+`wg-quick up wireguard`     
+## COMMAND TO STOP THE VPN     
+`wg-quick down wireguard`      
+
+## COMMAND TO START THE VPN WHEN POWER ON THE PC
+`systemctl enable wg-quick@wireguard`   
+## COMMMAND TO DISABLE THE VPN TO START AT POWER ON
+`systemctl disable wg-quick@wireguard`  
