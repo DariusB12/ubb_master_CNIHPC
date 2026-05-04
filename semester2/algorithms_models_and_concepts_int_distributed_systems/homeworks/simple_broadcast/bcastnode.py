@@ -78,9 +78,6 @@ def robust_send(sock, message, addr, timeout=5.0):
     return False
 
 if __name__ == '__main__':
-    # TODO: sunt unele mesaje care se pierd si cel putin un nod tot asteapta sa le primeasca (are doar vreo 470 log-uri)
-    #  motiv pt care nu se opreste scriptul
-
     if len(sys.argv) < 3:
         print("Wrong number of arguments\n")
         sys.exit(1)
@@ -138,7 +135,6 @@ if __name__ == '__main__':
 
         # waiting for the reading thread to finish
         recv_t.join()
-
     except FileNotFoundError as e:
         error_file.write("Config file not found\n")
     except Exception as e:
